@@ -5,3 +5,11 @@
 @tailwind base; 
     @tailwind components;
     @tailwind utilities;
+
+*::-webkit-scrollbar {
+    width: 12px;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: theme(colors.accent);
+    border-radius: 1rem;
+}
