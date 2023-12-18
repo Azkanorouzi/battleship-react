@@ -1,3 +1,6 @@
+import AppLayout from "./layout/AppLayout";
+
 export default function App() {
-        return <h1></h1>
+  return <AppLayout></AppLayout>
 }
+
