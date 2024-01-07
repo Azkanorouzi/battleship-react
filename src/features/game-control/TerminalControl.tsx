@@ -4,10 +4,10 @@ import TerminalContainer from '../../layout/TerminalContainer'
 import MessageBoard from './MessageBoard'
 import RadialGradientEffect from '../../ui/RadialGradientEffect'
 
-export default function TerminalControl() {
+export default function TerminalControl({stage = 'Preparation'} : {stage?: 'Preparation' | 'War'}) {
   return (
-    <Card title={<Title headingNumber={2} title='Preparation' type='neon' customStyles='text-secondary '/>} customStyle="gap-[10px]" initial={{scaleX: 0}} animate={{scaleX: 1}} transition={{delay:.8}}>
-    <div className="bg-black"></div>
+    <Card title={<Title headingNumber={2} title={stage} type='neon' customStyles='text-secondary '/>} customStyle="gap-[10px]" initial={{scaleX: 0}} animate={{scaleX: 1}} transition={{delay:.8}}>
+
     <div className="flex flex-col gap-5 justify-end">
       <TerminalContainer />
       <MessageBoard />

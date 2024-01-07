@@ -3,6 +3,7 @@ import RadialGradientEffect from '../../ui/RadialGradientEffect'
 import Title from '../../ui/Title'
 import Button from '../../ui/Button'
 import ShipPick from './ShipPick'
+import ships from '../../data/ships'
 
 export default function ShipPicker() {
   return (
@@ -12,16 +13,14 @@ export default function ShipPicker() {
       <Title headingNumber={3} title='Ships' type='neon' customStyles='text-secondary '/>
       <Button text='Axis: X' type="neon"  />
     </div>
-    <div className=" overflow-x-scroll max-w-xl">
-      
-      <section className="flex gap-4  p-5 w-[1100px]">
-        <ShipPick key={1} shipType="battleship"/>
-        <ShipPick key={2} shipType="carrier"/>
-        <ShipPick key={3} shipType="cruiser"/>
-        <ShipPick key={4} shipType="destroyer"/>
-        <ShipPick key={5} shipType="submarine"/>
-      </section>
+    <div className=" overflow-x-scroll max-w-xl"  >
+          <div className="flex gap-4  p-5 w-[1100px]">
+              {ships.map((ship) => {
+                return<ShipPick shipType={ship.name} key={ship.id}/>
+              })}
+          </div>
       </div>
+
     </Card>
   )
 }
