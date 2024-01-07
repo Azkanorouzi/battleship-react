@@ -13,3 +13,18 @@
     background-color: theme(colors.accent);
     border-radius: 1rem;
 }
+.positioned-ship {
+    animation: opacity 3s infinite;
+
+}
+@keyframes opacity {
+    from {
+        opacity: .3
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity: .3
+    }
+}
