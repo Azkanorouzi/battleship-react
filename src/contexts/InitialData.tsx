@@ -1,9 +1,15 @@
-export interface StateType {
+export interface GameStateType {
     message: string;
     error: string;
 }
-const initialData: StateType = {
+export interface UIStateType {
+    infoOpen: boolean;
+}
+const initialGameData: GameStateType = {
     message: '',
     error: ''
 }
-export default initialData;
+const initialUIData: UIStateType = {
+    infoOpen: false,
+}
+export {initialGameData, initialUIData};
