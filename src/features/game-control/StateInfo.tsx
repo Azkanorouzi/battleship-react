@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function StateInfo({title, shipsLeft, accurateShots, lastShot}: {title: string, shipsLeft: number, accurateShots: number, lastShot: string}) {
   return (

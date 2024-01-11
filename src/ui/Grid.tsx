@@ -30,7 +30,7 @@ export default function Grid({row = 3, col = 3, type = 'neon', customStyles = ''
 
     let rowCount = 1;
   return (
-    <section className={`lg:w-[650px] lg:h-[650px] relative text-lg ${styles[type]?.className} `} style={styles[type].style} >
+    <section className={`lg:w-[650px] lg:h-[650px] relative text-lg ${styles[type]?.className}`} style={styles[type].style} >
       {/* Mapping over rows to generate horizontal headers */}
         {rowName ? boardRows.map(rowNum => <HeadBoard rowNum={rowNum} />) : ''}
         {/* Mapping over board to generate cells & vertical headers */}
