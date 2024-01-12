@@ -1,7 +1,7 @@
 import { it, describe, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import React from 'react'
-import Title from '../src/ui/Title'
+import Title from '../../src/ui/Title'
 
 describe('given', () => {
     it('renders correct heading 1', () => {

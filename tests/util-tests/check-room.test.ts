@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { checkRoom } from '../src/utils/gameChecks'
+import { checkRoom } from '../../src/utils/gameChecks'
 
 describe('Checks room, to see if it can place target cells', () => {
     it("Returns true if we have enough room (horizontal)", () => {

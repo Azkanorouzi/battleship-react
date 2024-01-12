@@ -1,21 +1,22 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
 import {GameStateType, initialGameData} from "./InitialData";
 
-const GameContext = createContext({});
+const GameContext = createContext({ data: initialGameData, dispatch: (action: { type: string, payLoad: string }) => {
+    console.log(action)
+}});
 
-function reducer(state: GameStateType, action : {type: string, payLoad: string}) {
+function reducer(state: GameStateType, action : {type: string, payLoad: string}): GameStateType{
     switch(action.type) {
-        case'working':
-            return {...state, name: 'Hey there!'}
         default:
             return {...state}
     }
 }
 export default function GameControlContextProvider({ children } : {children: ReactNode}) {
     const [data, dispatch] = useReducer(reducer, initialGameData);
+
     return (
         <GameContext.Provider value={{
-            ...data,
+            data,
             dispatch
         }
         }>

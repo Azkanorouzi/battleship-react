@@ -6,22 +6,25 @@ import InitialPhase from "./InitialPhase";
 import BattlePhase from "./BattlePhase";
 import EndGameResult from "./EndGameResult";
 import NotFound from "./NotFound";
+import UIContextProvider from "../contexts/UIControlCotext";
 
 
 
 
 export default function AppLayout() {
   return <BrowserRouter>
+      <UIContextProvider >
   <MainContainer>
     <Routes>
-      <Route path="/" index element={<InitialPhase />}/>
-      <Route path="/preparation" element={<PreparationPhase />}></Route>
-      <Route path="/battleship" element={<BattlePhase />}></Route>
-      <Route path="/endgame" element={<EndGameResult />}></Route>
-      <Route path="*" element={<NotFound />}/>
+        <Route path="/" index element={<InitialPhase />}/>
+        <Route path="/preparation" element={<PreparationPhase />}></Route>
+        <Route path="/battleship" element={<BattlePhase />}></Route>
+        <Route path="/endgame" element={<EndGameResult />}></Route>
+        <Route path="*" element={<NotFound />}/>
     </Routes>
     <BackgroundSplitDecor></BackgroundSplitDecor>
     
   </MainContainer>
+      </UIContextProvider>
   </BrowserRouter>
 }

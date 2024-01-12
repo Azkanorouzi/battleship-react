@@ -1,11 +1,14 @@
-const commands = {
-    'game start --easy' : 'Starts the game in easy mode',
-    'game start --normal' : 'Starts the game in normal mode',
-    'game start --hard' : 'Starts the game in hard mode',
-    'game start -e' : 'Starts the game in easy mode',
-    'game start -n' : 'Starts the game in normal mode',
-    'game start -h' : 'Starts the game in hard mode',
-    'game start': 'Starts the game in normal mode',
+interface Commands {
+    [key: string]: string;
+  }
+const commands : Commands = {
+    'game start --easy' : 'Starting the game in easy mode',
+    'game start --normal' : 'Starting the game in normal mode',
+    'game start --hard' : 'Starting the game in hard mode',
+    'game start -e' : 'Starting the game in easy mode',
+    'game start -n' : 'Starting the game in normal mode',
+    'game start -h' : 'Starting the game in hard mode',
+    'game start': 'Starting the game in normal mode',
     'game end': 'Ends the game',
     'game stop': 'Stops the game',
     'game restart': 'Restarts the game',
@@ -18,9 +21,9 @@ const commands = {
     'fire rocket -h': 'Fires a horizontal rocket in the board!(you only have one rocket per',
     'fire rocket -v': 'Fires a  vertical rocket in the board!(you only have one rocket per',
     'help': 'Shows the instructions about the game',
-    'whoAmI': 'Who are you?',
+    'whoAmI': 'a human',
     'whoAreYou': 'Who am i?',
-    'hi': 'Says hi back to you :)',
+    'hi': 'hi back to you :)',
     'board put': 'shows information about put command',
     'board put BattleShip': 'Puts the battle ship to the board',
     'board put carrier': 'Puts the carrier to the board',

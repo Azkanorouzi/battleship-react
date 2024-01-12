@@ -1,5 +1,5 @@
 import { it, describe, expect } from 'vitest'
-import {checkCollision} from '../src/utils/gameChecks'
+import {checkCollision} from '../../src/utils/gameChecks'
 
 
 describe('collision tests', () => {

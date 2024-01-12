@@ -1,7 +1,5 @@
 import alphabet from "../data/alphabet" 
-/* 
-* 
-*/
+
 function createTargetCells({direction = 'horizontal', length = 3, firstCell = 'a1'} : {direction: 'vertical' | 'horizontal', length: number, firstCell: string}) {
     const firstCellAlpha = firstCell[0]
     const firstCellNum = firstCell.slice(1)
@@ -16,7 +14,7 @@ function checkCollision({ cells, fills} : {fills: string[], cells: string[]}) {
     return cells.some(cell => fills.includes(cell))
 }
 
-function checkRoom({lastCellAlpha, lastCellNum, targetCells} : {lastCellAlpha: string, lastCellNum: number, targetCells: string[]}) {
+function checkRoom({lastCellAlpha = 'j', lastCellNum = 10, targetCells} : {lastCellAlpha?: string, lastCellNum?: number, targetCells: string[]}) {
     return targetCells.every(cell => +cell.slice(1) <= lastCellNum && alphabet.indexOf(cell[0]) <= alphabet.indexOf(lastCellAlpha))
 }
 function checkIfLost(userShipsPos : string[]) {

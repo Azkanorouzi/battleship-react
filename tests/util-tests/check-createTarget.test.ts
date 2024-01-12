@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createTargetCells } from "../src/utils/gameChecks";
+import { createTargetCells } from "../../src/utils/gameChecks";
 
 describe('Creates target cells', () => {
     it ('creates target cells successfully (horizontal)', () => {
