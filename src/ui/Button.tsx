@@ -6,6 +6,7 @@ interface ButtonProps {
     customStyles?: string,
     text: string,
     onClick?: ({target}: {target: EventTarget}) => void,
+    disabled?: boolean,
 }
 interface TitleStyle {
     className: string, style: CSSProperties,
@@ -15,7 +16,7 @@ interface Styles {
 }
 function defaultOnClick({target} : {target: EventTarget}) { console.log(target)}
 // Custom styles is extra tailwind classes
-export default function Button({type, color, customStyles, text, onClick=defaultOnClick} : ButtonProps) {
+export default function Button({type, color, customStyles, text, onClick=defaultOnClick, disabled = false} : ButtonProps) {
 
     const styles : Styles= {
         neon: {className: `btn ${customStyles}`, style: {
@@ -24,6 +25,6 @@ export default function Button({type, color, customStyles, text, onClick=default
         }}
     }
   return (
-    <button className={styles[type].className} style={styles[type].style} onClick={onClick}>{text}</button>
+    <button className={styles[type].className} style={styles[type].style} onClick={onClick} disabled={disabled}>{text}</button>
   )
 }

@@ -71,7 +71,7 @@ function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, active
   const {dispatch:gameDispatch, data: gameData} = useGameControlContext()
 
   const shipHovered = <div className={` top-0 left-0 bottom-0 right-0 absolute ${!haveRoom ? 'bg-accent' : 'bg-secondary'}`}></div>
-  console.log(gameData.fills)
+
   return (
       <div className={` border border-secondary flex-1 relative  grid place-content-center w-full h-full overflow-visible ${customCellStyles} relative `} data-cellid={text} key={text} onMouseEnter={() => {
         if(data.selectedShip?.length) 

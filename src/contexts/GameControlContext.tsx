@@ -15,6 +15,8 @@ function reducer(state: GameStateType, action : {type: string, payLoad: string |
             return {...state, mode: 'hard'}
         case 'fills/set':
             return {...state, fills: [...state.fills, ...action.payLoad]}
+        case 'fills/reset':
+            return {...state, fills: initialGameData.fills}
         default:
             throw new Error('Invalid action type')
     }
