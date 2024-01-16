@@ -12,6 +12,7 @@ interface GridPropsInterface {
     customCellStyles?: string;
     rowName?: boolean;
     headName?:boolean
+    gridType: 'enemy' | 'user'
 }
 interface TitleStyle {
     className: string, style: CSSProperties,
@@ -20,7 +21,7 @@ interface Styles {
     [key:string]: TitleStyle;
 }
 
-export default function Grid({row = 3, col = 3, type = 'neon', customStyles = '', customCellStyles, rowName= true, headName = true} : GridPropsInterface) {
+export default function Grid({row = 3, col = 3, type = 'neon', customStyles = '', customCellStyles, rowName= true, headName = true, gridType} : GridPropsInterface) {
     const NumberOfCells = col * row;
     const board = Array.from({length: NumberOfCells }, (_,i) => i + 1)
     const boardRows = Array.from({length: row + 1}, (_,i) => i)
@@ -49,8 +50,8 @@ export default function Grid({row = 3, col = 3, type = 'neon', customStyles = ''
         // Increases the row num by 1 when it's divisible by 10
         if (cellNum % col == 0) rowCount += 1;
         // Returning the cells
-        if (text === `${alphabet[rowCount - 1]}1` && headName) return <><HeadBoardVertical rowCount={rowCount} /> <Cell text={text} customCellStyles={customCellStyles} activeCells={activeCells} hovered={activeCells.includes(text)} setActiveCells={setActiveCells} haveRoom={haveRoom}/> </>
-        return <Cell text={text} customCellStyles={customCellStyles} hovered={activeCells.includes(text)} setActiveCells={setActiveCells} haveRoom={haveRoom } activeCells={activeCells}/>
+        if (text === `${alphabet[rowCount - 1]}1` && headName) return <><HeadBoardVertical rowCount={rowCount} /> <Cell text={text} customCellStyles={customCellStyles} activeCells={activeCells} hovered={activeCells.includes(text)} setActiveCells={setActiveCells} haveRoom={haveRoom} gridType={gridType}/> </>
+        return <Cell text={text} customCellStyles={customCellStyles} hovered={activeCells.includes(text)} setActiveCells={setActiveCells} haveRoom={haveRoom } activeCells={activeCells} gridType={gridType}/>
         })}
     </section>
   )
@@ -66,7 +67,7 @@ function HeadBoardVertical({rowCount} : {rowCount: number}) {
 }
 
 // ======= Each individual cell ======= //
-function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, activeCells} : {text: string, customCellStyles?: string,  hovered: boolean, setActiveCells: Dispatch<SetStateAction<string[]>>, haveRoom: boolean, activeCells: string[]}) {
+function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, activeCells, gridType = 'user'} : {text: string, customCellStyles?: string,  hovered: boolean, setActiveCells: Dispatch<SetStateAction<string[]>>, haveRoom: boolean, activeCells: string[], gridType: 'enemy' | 'user'}) {
   const {data, dispatch} = useUIControl()
   const {dispatch:gameDispatch, data: gameData} = useGameControlContext()
 
@@ -85,7 +86,7 @@ function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, active
       }}
       >
         {hovered && shipHovered}
-        {gameData.fills.includes(text) && shipHovered}
+        {gridType === 'user' ? gameData.fills.includes(text) && shipHovered : <div></div>}
       </div>
       
     )

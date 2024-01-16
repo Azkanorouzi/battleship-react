@@ -15,7 +15,7 @@ function reducer(state: UIStateType, action : {type: string, payLoad: string | n
         case 'game/end':
             return state.gameState === 'game' ? {...state, gameState: 'complete'} : {...state}
         case 'game/prepare':
-            return state.gameState === 'starting' || state.gameState === 'game' ? {...state, gameState: 'preparation'} : {...state}
+            return state.gameState === 'starting' || state.gameState === 'game' || state.gameState === 'complete' ? {...state, gameState: 'preparation'} : {...state}
         case 'game/start':
             return {...state, gameState: (state.gameState === 'starting') ? 'game' : 'game'}
         case 'game/restart': 

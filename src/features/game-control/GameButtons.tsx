@@ -1,8 +1,10 @@
-import React from 'react'
 import Card from '../../ui/Card'
-import Button from '../../ui/Button'
+import GameResetButton from './GameResetButton'
+import GameSurrenderButton from './GameSurrenderButton'
+
 
 export default function GameButtons() {
+
   return (
 
         <Card
@@ -11,9 +13,9 @@ export default function GameButtons() {
         transition={{ delay: 1 }}
       >
         <div className="flex justify-center gap-5">
-          <Button type="neon" text="Surrender" customStyles="text-accent " />
-          <Button type="neon" text="Restart" customStyles="text-secondary" />
-          </div>
+          <GameResetButton />
+          <GameSurrenderButton />
+        </div>
       </Card>
   )
 }

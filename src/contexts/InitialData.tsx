@@ -3,8 +3,13 @@ import messages from "../data/messages";
 
 export interface GameStateType {
     error: string;
-    mode: 'easy' | 'normal' | 'hard' | null;
+    mode: 'easy' | 'normal' | 'hard';
     fills: string[];
+    enemyFills: string[];
+    fired: string[];
+    enemyFired: string[];
+    turn: 'user' | 'enemy';
+    winner: 'user' | 'enemy' | null;
 }
 
 
@@ -18,8 +23,13 @@ export interface UIStateType {
 }
 const initialGameData: GameStateType = {
     error: '',
-    mode: null,
-    fills: []
+    mode: 'easy',
+    fills: [],
+    enemyFills: [],
+    fired: [],
+    enemyFired: [],
+    turn: 'user',
+    winner: null,
 }
 const initialUIData: UIStateType = {
     infoOpen: false,
