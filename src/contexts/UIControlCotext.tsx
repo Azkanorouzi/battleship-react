@@ -1,31 +1,45 @@
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
-import { initialUIData, positionedShip, UIStateType } from "./InitialData";
+import { initialUIData, UIStateType } from "./InitialData";
 import { useNavigate } from "react-router-dom";
+import { ship } from "../data/ships";
 
-const UIContext = createContext({ data: initialUIData, dispatch: (action: { type: string, payLoad: string }) => {
+// ================================== Context
+const UIContext = createContext({ data: initialUIData, dispatch: (action: { type: string, payLoad: string | ship }) => {
     console.log(action)
 } });
-
-function reducer(state: UIStateType, action : {type: string, payLoad: string | undefined | positionedShip}): UIStateType {
+// ================================== Reducer
+function reducer(state: UIStateType, action : {type: string, payLoad: string | null | ship }): UIStateType {
     switch(action.type) {
         case "toggleInfo":
             return {...state, infoOpen: !state.infoOpen}
-        case 'endGame':
+        case 'game/end':
             return state.gameState === 'game' ? {...state, gameState: 'complete'} : {...state}
-        case 'prepareGame':
+        case 'game/prepare':
             return state.gameState === 'starting' || state.gameState === 'game' ? {...state, gameState: 'preparation'} : {...state}
-        case 'startGame':
-            return {...state, gameState: 'game'}
-        case 'restartGame': 
-            return {...state, gameState: 'starting'}
-        case 'setShip':
-            return {...state, positionedShips: typeof action.payLoad !== 'string' && typeof action.payLoad !== 'undefined' ?  [...state.positionedShips.slice(0,-2), action.payLoad] : [...state.positionedShips]}
-        case 'resetShips':
-            return state.positionedShips.length ?  {...state, positionedShips: []} : {...state}
+        case 'game/start':
+            return {...state, gameState: (state.gameState === 'starting') ? 'game' : 'game'}
+        case 'game/restart': 
+            return {...initialUIData}
+        case 'ships/set':
+            return {...state, selectedShip: null , ships: state.ships.filter(ship => {
+                return ship.id !== action.payLoad
+            })}
+        case 'ships/reset':
+            return {...state, ships: initialUIData.ships}
+        case 'ships/vertical':
+            return {...state, dir: 'vertical'}
+        case 'ships/horizontal':
+            return {...state, dir: 'horizontal'}
+        case 'selectedShip/set' :
+            return {...state, selectedShip: typeof action.payLoad !== 'string' ? action.payLoad : state.selectedShip}
+        case 'message/set':
+            return {...state, message: (typeof action.payLoad === 'string') ? action.payLoad : state.message}
         default: 
-            return {...state}
+            throw new Error("Invalid action type")
     }
-}   
+} 
+
+// ================================== Context provider
 export default function UIContextProvider({children} : {children: ReactNode}) {
     const [data, dispatch] = useReducer(reducer, initialUIData);
     const navigate = useNavigate()
@@ -47,13 +61,14 @@ export default function UIContextProvider({children} : {children: ReactNode}) {
                 break;
         }
     }, [data.gameState, navigate])
+    
     return <UIContext.Provider value={{
         data, dispatch
     }}>
         {children}
     </UIContext.Provider>
 }
-
+// ================================== Context custom hook
 export function useUIControl() {
     const context = useContext(UIContext);
     if (!context) {

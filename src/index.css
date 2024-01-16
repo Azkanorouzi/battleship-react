@@ -3,8 +3,8 @@
     font-family: 'Roboto Mono', monospace;
 }
 @tailwind base; 
-    @tailwind components;
-    @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
 *::-webkit-scrollbar {
     width: 12px;
@@ -15,7 +15,10 @@
 }
 .positioned-ship {
     animation: opacity 3s infinite;
-
+}
+.width-290 {
+    width: 290px !important;
+    height: 290px !important;
 }
 @keyframes opacity {
     from {

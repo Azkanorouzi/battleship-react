@@ -7,6 +7,7 @@ import BattlePhase from "./BattlePhase";
 import EndGameResult from "./EndGameResult";
 import NotFound from "./NotFound";
 import UIContextProvider from "../contexts/UIControlCotext";
+import GameControlContextProvider from "../contexts/GameControlContext";
 
 
 
@@ -14,6 +15,7 @@ import UIContextProvider from "../contexts/UIControlCotext";
 export default function AppLayout() {
   return <BrowserRouter>
       <UIContextProvider >
+        <GameControlContextProvider>
   <MainContainer>
     <Routes>
         <Route path="/" index element={<InitialPhase />}/>
@@ -25,6 +27,7 @@ export default function AppLayout() {
     <BackgroundSplitDecor></BackgroundSplitDecor>
     
   </MainContainer>
+  </GameControlContextProvider>
       </UIContextProvider>
   </BrowserRouter>
 }

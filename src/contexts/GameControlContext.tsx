@@ -1,14 +1,22 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
 import {GameStateType, initialGameData} from "./InitialData";
 
-const GameContext = createContext({ data: initialGameData, dispatch: (action: { type: string, payLoad: string }) => {
+const GameContext = createContext({ data: initialGameData, dispatch: (action: { type: string, payLoad: string | string[] }) => {
     console.log(action)
 }});
 
-function reducer(state: GameStateType, action : {type: string, payLoad: string}): GameStateType{
+function reducer(state: GameStateType, action : {type: string, payLoad: string | string[]}): GameStateType{
     switch(action.type) {
+        case 'mode/easy':
+            return {...state, mode: 'easy'}
+        case 'mode/normal':
+            return {...state, mode: 'normal'}
+        case 'mode/hard':
+            return {...state, mode: 'hard'}
+        case 'fills/set':
+            return {...state, fills: [...state.fills, ...action.payLoad]}
         default:
-            return {...state}
+            throw new Error('Invalid action type')
     }
 }
 export default function GameControlContextProvider({ children } : {children: ReactNode}) {

@@ -8,6 +8,9 @@ interface UseTypeEffectProps {
 export default function useTypeEffect({text, speed = 100} : UseTypeEffectProps) {
     const [curMessage, setCurMessage] = useState('');
     useEffect(() => {
+      setCurMessage('')
+    }, [text])
+    useEffect(() => {
         const intervalId = setInterval(() => {
           if (text[curMessage.length] === undefined) {
             clearInterval(intervalId)

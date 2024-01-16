@@ -3,7 +3,7 @@ import alphabet from "../data/alphabet"
 function createTargetCells({direction = 'horizontal', length = 3, firstCell = 'a1'} : {direction: 'vertical' | 'horizontal', length: number, firstCell: string}) {
     const firstCellAlpha = firstCell[0]
     const firstCellNum = firstCell.slice(1)
-    console.log(direction, length, firstCell)
+    
     const targetCells = Array.from({length: length}, (_,i) => {
         return direction === 'horizontal' ? `${firstCellAlpha}${+firstCellNum + i}` : `${alphabet[alphabet.indexOf(firstCellAlpha) + i]}${firstCellNum}`
     })

@@ -1,6 +1,9 @@
-import { CSSProperties } from "react";
-import { ship } from "../data/ships";
+import { CSSProperties, Dispatch, SetStateAction, useEffect, useState } from "react";
 import alphabet from "../data/alphabet";
+import { useUIControl } from "../contexts/UIControlCotext";
+import { checkCollision, checkRoom, createTargetCells } from "../utils/gameChecks";
+import { useGameControlContext } from "../contexts/GameControlContext";
+
 interface GridPropsInterface {
     row?: number;
     col?: number;
@@ -18,7 +21,6 @@ interface Styles {
 }
 
 export default function Grid({row = 3, col = 3, type = 'neon', customStyles = '', customCellStyles, rowName= true, headName = true} : GridPropsInterface) {
-
     const NumberOfCells = col * row;
     const board = Array.from({length: NumberOfCells }, (_,i) => i + 1)
     const boardRows = Array.from({length: row + 1}, (_,i) => i)
@@ -27,6 +29,13 @@ export default function Grid({row = 3, col = 3, type = 'neon', customStyles = ''
             textShadow: `2px 2px 10px currentColor`,
         }}
     }
+    const {data: gameData} = useGameControlContext()
+    const [activeCells, setActiveCells] = useState<string[]>([])
+    const [haveRoom, setHaveRoom] = useState<boolean>(true)
+
+    useEffect(() => {
+      setHaveRoom(checkRoom({targetCells: activeCells, lastCellAlpha: 'j', lastCellNum: 10}) && !checkCollision({cells: activeCells, fills: gameData.fills}))
+    }, [activeCells, gameData.fills])
 
     let rowCount = 1;
   return (
@@ -40,8 +49,8 @@ export default function Grid({row = 3, col = 3, type = 'neon', customStyles = ''
         // Increases the row num by 1 when it's divisible by 10
         if (cellNum % col == 0) rowCount += 1;
         // Returning the cells
-        if (text === `${alphabet[rowCount - 1]}1` && headName) return <><HeadBoardVertical rowCount={rowCount} /> <Cell text={text} customCellStyles={customCellStyles}/> </>
-        return <Cell text={text} customCellStyles={customCellStyles} />
+        if (text === `${alphabet[rowCount - 1]}1` && headName) return <><HeadBoardVertical rowCount={rowCount} /> <Cell text={text} customCellStyles={customCellStyles} activeCells={activeCells} hovered={activeCells.includes(text)} setActiveCells={setActiveCells} haveRoom={haveRoom}/> </>
+        return <Cell text={text} customCellStyles={customCellStyles} hovered={activeCells.includes(text)} setActiveCells={setActiveCells} haveRoom={haveRoom } activeCells={activeCells}/>
         })}
     </section>
   )
@@ -57,12 +66,26 @@ function HeadBoardVertical({rowCount} : {rowCount: number}) {
 }
 
 // ======= Each individual cell ======= //
-function Cell({text, customCellStyles} : {text: string, customCellStyles?: string, ship? : ship}) {
+function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, activeCells} : {text: string, customCellStyles?: string,  hovered: boolean, setActiveCells: Dispatch<SetStateAction<string[]>>, haveRoom: boolean, activeCells: string[]}) {
+  const {data, dispatch} = useUIControl()
+  const {dispatch:gameDispatch, data: gameData} = useGameControlContext()
 
+  const shipHovered = <div className={` top-0 left-0 bottom-0 right-0 absolute ${!haveRoom ? 'bg-accent' : 'bg-secondary'}`}></div>
+  console.log(gameData.fills)
   return (
-
-      <div className={` border border-secondary flex-1 relative  grid place-content-center w-full h-full overflow-visible ${customCellStyles} `} data-cellid={text} key={text} >
-          
+      <div className={` border border-secondary flex-1 relative  grid place-content-center w-full h-full overflow-visible ${customCellStyles} relative `} data-cellid={text} key={text} onMouseEnter={() => {
+        if(data.selectedShip?.length) 
+          setActiveCells(createTargetCells({direction: data.dir, length: data.selectedShip?.length, firstCell: text }))
+      }}  onMouseLeave={() => {setActiveCells(() => [])}}
+      onClick={() => {
+        if(data.selectedShip && haveRoom ) {
+          dispatch({type: 'ships/set', payLoad: data.selectedShip?.id})
+          gameDispatch({type:'fills/set', payLoad: activeCells})
+        }
+      }}
+      >
+        {hovered && shipHovered}
+        {gameData.fills.includes(text) && shipHovered}
       </div>
       
     )

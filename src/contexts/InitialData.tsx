@@ -1,28 +1,32 @@
-import { ship } from "../data/ships";
-
-export interface positionedShip {
-    ship: ship,
-    position: [string, string, string, string] | [string, string] | [string, string, string]
-    direction: 'vertical' | 'horizontal'
-}
+import ships, { ship } from "../data/ships";
+import messages from "../data/messages";
 
 export interface GameStateType {
-    message: string;
     error: string;
+    mode: 'easy' | 'normal' | 'hard' | null;
+    fills: string[];
 }
+
+
 export interface UIStateType {
     infoOpen: boolean;
     gameState: 'starting' | 'preparation' | 'game' | 'complete'
-    positionedShips: positionedShip[]
-
+    ships: ship[]
+    message: string
+    selectedShip:ship | null,
+    dir: 'vertical' | 'horizontal',
 }
 const initialGameData: GameStateType = {
-    message: '',
     error: '',
+    mode: null,
+    fills: []
 }
 const initialUIData: UIStateType = {
     infoOpen: false,
     gameState: 'starting',
-    positionedShips: [],
+    ships: [...ships],
+    message: messages.initial,
+    selectedShip: null,
+    dir: 'horizontal',
 }
 export {initialGameData, initialUIData};
