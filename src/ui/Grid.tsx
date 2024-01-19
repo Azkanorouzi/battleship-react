@@ -3,6 +3,7 @@ import alphabet from "../data/alphabet";
 import { useUIControl } from "../contexts/UIControlCotext";
 import { checkCollision, checkRoom, createTargetCells } from "../utils/gameChecks";
 import { useGameControlContext } from "../contexts/GameControlContext";
+import cross from '../assets/cross.svg'
 
 interface GridPropsInterface {
     row?: number;
@@ -68,25 +69,43 @@ function HeadBoardVertical({rowCount} : {rowCount: number}) {
 
 // ======= Each individual cell ======= //
 function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, activeCells, gridType = 'user'} : {text: string, customCellStyles?: string,  hovered: boolean, setActiveCells: Dispatch<SetStateAction<string[]>>, haveRoom: boolean, activeCells: string[], gridType: 'enemy' | 'user'}) {
-  const {data, dispatch} = useUIControl()
+  const {data: uiData, dispatch: uiDispatch} = useUIControl()
   const {dispatch:gameDispatch, data: gameData} = useGameControlContext()
 
-  const shipHovered = <div className={` top-0 left-0 bottom-0 right-0 absolute ${!haveRoom ? 'bg-accent' : 'bg-secondary'}`}></div>
-
+  const shipActive = <div className={` top-0 left-0 bottom-0 right-0 absolute ${!haveRoom ? 'bg-accent' : 'bg-secondary'}`}></div>
+  const shipShotEnemy = <div className={` top-0 left-0 bottom-0 right-0 absolute bg-accent rounded-full`}></div>
+  const shipShotAccurateEnemy = <div className={` top-0 left-0 bottom-0 right-0 absolute bg-red-700 rounded-full`}>
+    <img src={cross} alt='cross' />
+  </div>
+  const shipShotUser = <div className={` top-0 left-0 bottom-0 right-0 absolute bg-secondary rounded-full`}></div>
+  const shipShotAccurateUser = <div className={` top-0 left-0 bottom-0 right-0 absolute bg-secondary rounded-full`}>
+  <img src={cross} alt='cross' />
+</div>
   return (
-      <div className={` border border-secondary flex-1 relative  grid place-content-center w-full h-full overflow-visible ${customCellStyles} relative `} data-cellid={text} key={text} onMouseEnter={() => {
-        if(data.selectedShip?.length) 
-          setActiveCells(createTargetCells({direction: data.dir, length: data.selectedShip?.length, firstCell: text }))
+      <div className={` border border-secondary flex-1 relative  grid place-content-center w-full h-full overflow-visible ${customCellStyles} relative ${gridType === 'enemy' && gameData.turn === 'user' ? 'hover:bg-secondary cursor-crosshair' : ''}`} data-cellid={text} key={text} onMouseEnter={() => {
+        if(uiData.selectedShip?.length) 
+          setActiveCells(createTargetCells({direction: uiData.dir, length: uiData.selectedShip?.length, firstCell: text }))
       }}  onMouseLeave={() => {setActiveCells(() => [])}}
       onClick={() => {
-        if(data.selectedShip && haveRoom ) {
-          dispatch({type: 'ships/set', payLoad: data.selectedShip?.id})
+        if(uiData.selectedShip && haveRoom ) {
+          uiDispatch({type: 'ships/set', payLoad: uiData.selectedShip?.id})
           gameDispatch({type:'fills/set', payLoad: activeCells})
+        }
+        if (gridType === 'enemy' && gameData.turn === 'user' && !gameData.fired.includes(text)) {
+          gameDispatch({type: 'fire/user', payLoad: text})
         }
       }}
       >
-        {hovered && shipHovered}
-        {gridType === 'user' ? gameData.fills.includes(text) && shipHovered : <div></div>}
+        {hovered && shipActive}
+        {gridType === 'enemy' && gameData.fired.includes(text) && !gameData.enemyFills.includes(text) && shipShotUser
+        }
+        {gridType === 'enemy' && gameData.fired.includes(text) && gameData.enemyFills.includes(text) && shipShotAccurateUser
+        }
+        {gridType === 'user' && gameData.enemyFired.includes(text) && !gameData.fills.includes(text) && shipShotEnemy
+        }
+        {gridType === 'user' && gameData.enemyFired.includes(text) && gameData.fills.includes(text) && shipShotAccurateEnemy
+        }
+        {gridType === 'user' && gameData.fills.includes(text) && !gameData.enemyFired.includes(text)  && shipActive}
       </div>
       
     )

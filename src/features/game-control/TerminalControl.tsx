@@ -4,7 +4,7 @@ import TerminalContainer from '../../layout/TerminalContainer'
 import MessageBoard from './MessageBoard'
 import RadialGradientEffect from '../../ui/RadialGradientEffect'
 
-export default function TerminalControl({stage = 'Preparation'} : {stage?: 'Preparation' | 'War'}) {
+export default function TerminalControl({stage = 'Preparation'} : {stage?: 'Preparation' | `Mode: ${string}`}) {
   return (
     <Card title={<Title headingNumber={2} title={stage} type='neon' customStyles='text-secondary '/>} customStyle="gap-[10px]" initial={{scaleX: 0}} animate={{scaleX: 1}} transition={{delay:.8}}>
 

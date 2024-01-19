@@ -17,7 +17,6 @@ interface Styles {
 function defaultOnClick({target} : {target: EventTarget}) { console.log(target)}
 // Custom styles is extra tailwind classes
 export default function Button({type, color, customStyles, text, onClick=defaultOnClick, disabled = false} : ButtonProps) {
-
     const styles : Styles= {
         neon: {className: `btn ${customStyles}`, style: {
             boxShadow: `2px 2px 10px currentColor`,

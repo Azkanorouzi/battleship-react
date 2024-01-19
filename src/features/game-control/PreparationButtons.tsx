@@ -1,5 +1,6 @@
 import { useGameControlContext } from "../../contexts/GameControlContext";
 import { useUIControl } from "../../contexts/UIControlCotext";
+import ships from "../../data/ships";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";
 import { generateRandomFills } from "../../utils/generateRandomFIlls";
@@ -20,6 +21,8 @@ export default function PreparationButtons() {
       <Button type="neon" text="Confirm" customStyles="text-accent " onClick={() => {
         if (!isConfirmedActive) return
         dispatchUI({type: 'game/start', payLoad: ''})
+        const randomFills = generateRandomFills(gameData.enemyFills, ships.map(ship => ship.length))
+        dispatchGame({type: 'enemyFills/set', payLoad: randomFills})
       }} disabled={!isConfirmedActive}/>
       <Button type="neon" text="Reset" customStyles="text-secondary" disabled={!isResetActive} onClick={() => {
         if (!isResetActive) return
@@ -27,10 +30,11 @@ export default function PreparationButtons() {
         dispatchGame({type: 'fills/reset', payLoad: ''})
       }}/>
       <Button type="neon" text="Random" customStyles="text-primary" onClick={() => {
-        console.log(gameData.fills, uiData.ships)
         const randomFills = generateRandomFills(gameData.fills, uiData.ships.map(ship => ship.length))
         dispatchGame({type: 'fills/set', payLoad: randomFills})
         dispatchUI({type: 'ships/empty', payLoad: ''})
+        dispatchUI({type: 'selectedShip/deselect', payLoad: ''})
+        
       }}/>
     </div>
   </Card>

@@ -17,6 +17,14 @@ function reducer(state: GameStateType, action : {type: string, payLoad: string |
             return {...state, fills: [...state.fills, ...action.payLoad]}
         case 'fills/reset':
             return {...state, fills: initialGameData.fills}
+        case 'enemyFills/set':
+            return {...state, enemyFills: [...action.payLoad]}
+        case 'fire/user':
+            return (typeof action.payLoad === 'string') ? {...state, fired: [...state.fired, action.payLoad ], turn: 'enemy'} : {...state, fired: [...state.fired, ...action.payLoad], turn: 'enemy'}
+        case 'fire/enemy':
+            return (typeof action.payLoad === 'string') ? {...state, enemyFired: [...state.enemyFired, action.payLoad ], turn: 'user'} : {...state, enemyFired: [...state.enemyFired, ...action.payLoad], turn: 'user'}
+        case 'turn/switch':
+            return {...state, }
         case 'game/restart':
             return {...initialGameData}
         case 'winner/user':
@@ -27,6 +35,7 @@ function reducer(state: GameStateType, action : {type: string, payLoad: string |
             throw new Error('Invalid action type')
     }
 }
+
 export default function GameControlContextProvider({ children } : {children: ReactNode}) {
     const [data, dispatch] = useReducer(reducer, initialGameData);
 
@@ -40,6 +49,7 @@ export default function GameControlContextProvider({ children } : {children: Rea
         </GameContext.Provider>
     )
 }
+
 export function useGameControlContext() {
     const context = useContext(GameContext)
     if (!context) {

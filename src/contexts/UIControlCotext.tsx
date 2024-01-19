@@ -34,6 +34,8 @@ function reducer(state: UIStateType, action : {type: string, payLoad: string | n
             return {...state, dir: 'horizontal'}
         case 'selectedShip/set' :
             return {...state, selectedShip: typeof action.payLoad !== 'string' ? action.payLoad : state.selectedShip}
+        case 'selectedShip/deselect' :
+            return {...state, selectedShip: initialUIData.selectedShip}
         case 'message/set':
             return {...state, message: (typeof action.payLoad === 'string') ? action.payLoad : state.message}
         default: 
