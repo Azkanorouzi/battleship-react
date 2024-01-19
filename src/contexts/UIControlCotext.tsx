@@ -26,6 +26,8 @@ function reducer(state: UIStateType, action : {type: string, payLoad: string | n
             })}
         case 'ships/reset':
             return {...state, ships: initialUIData.ships}
+        case 'ships/empty':
+            return {...state, ships: []}
         case 'ships/vertical':
             return {...state, dir: 'vertical'}
         case 'ships/horizontal':
