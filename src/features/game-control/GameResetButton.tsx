@@ -13,6 +13,7 @@ export default function GameResetButton() {
         dispatchUI({type:'game/prepare', payLoad:''})
         dispatchUI({type: 'ships/reset', payLoad:''})
         dispatchGame({type: 'game/restart', payLoad:''})
+        dispatchGame({type: 'enemyFired/reset', payLoad: ''})
         navigate('/preparation')
       }}/>
   )

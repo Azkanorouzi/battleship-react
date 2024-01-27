@@ -27,6 +27,8 @@ function reducer(state: GameStateType, action : {type: string, payLoad: string |
             return {...state, }
         case 'game/restart':
             return {...initialGameData}
+        case 'enemyFired/reset':
+            return {...state, enemyFired: []}
         case 'userLastShot/set':
             return  (typeof action.payLoad === 'string') ?{...state, userResults: {
                 ...state.userResults,

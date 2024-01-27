@@ -9,13 +9,16 @@ function shotUser(difficulty: 'easy' | 'normal' | 'hard', lastShot: string, user
     const randomCell =  `${randomAlpha}${randomNum}`
     if (difficulty === 'easy') return randomCell
     if (difficulty === 'normal') {
-        const randomIndex = generateRandomNumber(userFills.length);
-        console.log(userFills[randomIndex])
-        return userFills[randomIndex]
+        return generateRandomNumber(100) > 90 ? generateAccurateShot(userFills) : lastShot.length ? addRandomCell(lastShot) : randomCell
     }
-    if (difficulty === 'normal' || difficulty === 'hard') {
-        return lastShot.length ? addRandomCell(lastShot) : randomCell
+    if (difficulty === 'hard') {
+        return generateRandomNumber(100) > 40 ? generateAccurateShot(userFills) : lastShot.length ? addRandomCell(lastShot) : randomCell
     }
+}
+
+function generateAccurateShot(userFills: string[]) {
+    const randomIndex = generateRandomNumber(userFills.length);
+    return userFills[randomIndex]
 }
 
 export default shotUser;
