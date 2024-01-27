@@ -20,13 +20,27 @@ function reducer(state: GameStateType, action : {type: string, payLoad: string |
         case 'enemyFills/set':
             return {...state, enemyFills: [...action.payLoad]}
         case 'fire/user':
-            return (typeof action.payLoad === 'string') ? {...state, fired: [...state.fired, action.payLoad ], turn: 'enemy'} : {...state, fired: [...state.fired, ...action.payLoad], turn: 'enemy'}
+            return (typeof action.payLoad === 'string') ? {...state, fired: [...state.fired, action.payLoad ], turn: state.enemyFills.includes(action.payLoad) ? 'user' : 'enemy'} : {...state }
         case 'fire/enemy':
-            return (typeof action.payLoad === 'string') ? {...state, enemyFired: [...state.enemyFired, action.payLoad ], turn: 'user'} : {...state, enemyFired: [...state.enemyFired, ...action.payLoad], turn: 'user'}
+            return (typeof action.payLoad === 'string') ? {...state, enemyFired: [...state.enemyFired, action.payLoad ], turn: state.fills.includes(action.payLoad) ? 'enemy' : 'user'} : {...state}
         case 'turn/switch':
             return {...state, }
         case 'game/restart':
             return {...initialGameData}
+        case 'userLastShot/set':
+            return  (typeof action.payLoad === 'string') ?{...state, userResults: {
+                ...state.userResults,
+                lastShot:  action.payLoad ,
+                accurateShots: state.enemyFills.includes(action.payLoad) ? state.userResults.accurateShots + 1 : state.userResults.accurateShots,
+                missedShots: !state.enemyFills.includes(action.payLoad) ? state.userResults.missedShots + 1 : state.userResults.missedShots,
+            }} : {...state}
+        case 'enemyLastShot/set':
+            return   (typeof action.payLoad === 'string') ? {...state, enemyResults: {
+                ...state.userResults,
+                lastShot: action.payLoad,
+                accurateShots: state.fills.includes(action.payLoad) ? state.enemyResults.accurateShots + 1 : state.enemyResults.accurateShots,
+                missedShots: !state.fills.includes(action.payLoad) ? state.enemyResults.missedShots + 1 : state.enemyResults.missedShots,
+            }} : {...state}
         case 'winner/user':
             return {...state, winner:'user'}
         case 'winner/enemy':

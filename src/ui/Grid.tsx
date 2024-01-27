@@ -93,6 +93,7 @@ function Cell({text, customCellStyles, setActiveCells, hovered, haveRoom, active
         }
         if (gridType === 'enemy' && gameData.turn === 'user' && !gameData.fired.includes(text)) {
           gameDispatch({type: 'fire/user', payLoad: text})
+          gameDispatch({type: 'userLastShot/set', payLoad: text})
         }
       }}
       >

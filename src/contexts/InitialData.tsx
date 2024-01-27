@@ -10,9 +10,17 @@ export interface GameStateType {
     enemyFired: string[];
     turn: 'user' | 'enemy';
     winner: 'user' | 'enemy' | null;
+    userResults: {
+        missedShots: number;
+        accurateShots:number;
+        lastShot: string;
+    }
+    enemyResults: {
+        missedShots: number;
+        accurateShots:number;
+        lastShot: string;
+    }
 }
-
-
 export interface UIStateType {
     infoOpen: boolean;
     gameState: 'starting' | 'preparation' | 'game' | 'complete'
@@ -21,15 +29,26 @@ export interface UIStateType {
     selectedShip:ship | null,
     dir: 'vertical' | 'horizontal',
 }
+
 const initialGameData: GameStateType = {
     error: '',
-    mode: 'easy',
+    mode: 'normal',
     fills: [],
     enemyFills: [],
     fired: [],
     enemyFired: [],
     turn: 'user',
     winner: null,
+    userResults: {
+        missedShots: 0,
+        accurateShots:0,
+        lastShot: ''
+    },
+    enemyResults: {
+        missedShots: 0,
+        accurateShots: 0,
+        lastShot: ''
+    }
 }
 const initialUIData: UIStateType = {
     infoOpen: false,
