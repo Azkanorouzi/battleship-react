@@ -12,8 +12,8 @@ export default function Terminal({animate = false, customStyles} : {animate?:boo
   // ================================== Handlers
 // Handles the terminal submission
   function handleTerminalSubmit(text: string) {
+    // This function will return the corresponding message for a particular command
     const message = getMessage(text)
-    dispatchUi({type: 'message/set', payLoad: message})
     switch(message) {
       case 'Starting the game in easy mode':
         dispatchUi({type: 'game/prepare', payLoad: ''})
@@ -21,7 +21,7 @@ export default function Terminal({animate = false, customStyles} : {animate?:boo
         break;
       case 'Starting the game in normal mode':
         dispatchUi({type: 'game/prepare', payLoad: ''})
-        dispatchGame({type: 'mode/easy', payLoad: ''})
+        dispatchGame({type: 'mode/normal', payLoad: ''})
         break;
       case 'Starting the game in hard mode':
         dispatchUi({type: 'game/prepare', payLoad: ''})

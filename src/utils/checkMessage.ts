@@ -1,5 +1,5 @@
 import commands from "../data/commands";
-
+// This function will return the corresponding message for a specific
 function getMessage(command: string) {
     const cleanCommand = command.trim().replaceAll(' ', '')
     let correspondingMessage ;
