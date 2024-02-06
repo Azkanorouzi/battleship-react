@@ -36,8 +36,6 @@ function reducer(state: UIStateType, action : {type: string, payLoad: string | n
             return {...state, selectedShip: typeof action.payLoad !== 'string' ? action.payLoad : state.selectedShip}
         case 'selectedShip/deselect' :
             return {...state, selectedShip: initialUIData.selectedShip}
-        case 'message/set':
-            return {...state, message: (typeof action.payLoad === 'string') ? action.payLoad : state.message}
         default: 
             throw new Error("Invalid action type")
     }

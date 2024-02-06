@@ -10,6 +10,7 @@ export interface GameStateType {
     enemyFired: string[];
     turn: 'user' | 'enemy';
     winner: 'user' | 'enemy' | null;
+    message: string
     userResults: {
         missedShots: number;
         accurateShots:number;
@@ -25,7 +26,6 @@ export interface UIStateType {
     infoOpen: boolean;
     gameState: 'starting' | 'preparation' | 'game' | 'complete'
     ships: ship[]
-    message: string
     selectedShip:ship | null,
     dir: 'vertical' | 'horizontal',
 }
@@ -39,6 +39,7 @@ const initialGameData: GameStateType = {
     enemyFired: [],
     turn: 'user',
     winner: null,
+    message: messages.initial,
     userResults: {
         missedShots: 0,
         accurateShots:0,
@@ -54,7 +55,6 @@ const initialUIData: UIStateType = {
     infoOpen: false,
     gameState: 'starting',
     ships: [...ships],
-    message: messages.initial,
     selectedShip: null,
     dir: 'horizontal',
 }

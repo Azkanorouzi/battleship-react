@@ -1,5 +1,6 @@
 import { useGameControlContext } from "../../contexts/GameControlContext";
 import { useUIControl } from "../../contexts/UIControlCotext";
+import messages from "../../data/messages";
 import ships from "../../data/ships";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";
@@ -32,6 +33,7 @@ export default function PreparationButtons() {
       <Button type="neon" text="Random" customStyles="text-primary" onClick={() => {
         const randomFills = generateRandomFills(gameData.fills, uiData.ships.map(ship => ship.length))
         dispatchGame({type: 'fills/set', payLoad: randomFills})
+        dispatchGame({type: 'message/set', payLoad: messages.randomFills})
         dispatchUI({type: 'ships/empty', payLoad: ''})
         dispatchUI({type: 'selectedShip/deselect', payLoad: ''})
         
