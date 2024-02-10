@@ -1,4 +1,4 @@
-# Country query
+# Battleship react
 
 demo: [https://battleship-rc.netlify.app/](https://battleship-rc.netlify.app/)
 
