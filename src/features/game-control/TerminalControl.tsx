@@ -8,7 +8,7 @@ export default function TerminalControl({stage = 'Preparation'} : {stage?: 'Prep
   return (
     <Card title={<Title headingNumber={2} title={stage} type='neon' customStyles={stage === 'Mode: HARD' ? 'text-accent' : stage === 'Mode: NORMAL' ? 'text-yellow-500' : 'text-secondary'}/>} customStyle="gap-[10px]" initial={{scaleX: 0}} animate={{scaleX: 1}} transition={{delay:.8}}>
 
-    <div className="flex flex-col gap-5 justify-end">
+    <div className="flex flex-col gap-5 flex-end">
       <TerminalContainer />
       <MessageBoard />
     </div>

@@ -6,7 +6,7 @@ import PreparationButtons from "../features/game-control/PreparationButtons";
 export default function PreparationPhase() {
 
   return (
-    <section className="flex gap-6 flex-col lg:flex-row ">
+    <section className="flex gap-6 flex-col lg:flex-row p-5">
         <Board type={'user'}/>
         <section className="flex flex-col gap-2 ">
           <ShipPicker />

@@ -14,7 +14,7 @@ interface Styles {
     [key:string]: TitleStyle;
 }
 export default function Title({title, headingNumber, type='neon', color = 'unset', customStyles} : TitleProps) {
-    const fontSize = (headingNumber  >= 5 || headingNumber < 1) ? `text-xl` : `lg:text-${7 - headingNumber }xl text-${7-2}xl`
+    const fontSize = (headingNumber  >= 5 || headingNumber < 1) ? `text-xl` : `lg:text-${7 - headingNumber }xl text-${7-3}xl`
     
     const styles : Styles= {
         neon: {className: `${fontSize} ${customStyles}`, style: {
