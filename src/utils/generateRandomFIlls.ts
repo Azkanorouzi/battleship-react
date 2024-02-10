@@ -4,6 +4,7 @@ import { checkCollision, checkRoom, createTargetCells } from "./gameChecks";
 const dir : ['vertical', 'horizontal'] = ['vertical', 'horizontal'];
 
 export function generateRandomFills(fills: string[], shipsLengthArr: number[]) {
+    console.log(fills)
     // Will be filled/returned
     const randomFills = [];
     for (let i = 0; i < shipsLengthArr.length;) {
